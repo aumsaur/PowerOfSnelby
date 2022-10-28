@@ -5,7 +5,6 @@ using UnityEngine;
 
 public static class TransitionController
 {
-
     public static IEnumerator ActivateTransition(Material transitionMaterial, string propertyName, float duration, bool isEnterMode = true, Action todo = null)
     {
         if (isEnterMode)
@@ -35,14 +34,10 @@ public static class TransitionController
         }
     }
 
-    // Call for using Transition via animator
-    //public static IEnumerator ActivateTransition(Animator transitionAnimator, string parameterToTrigger, float duration)
     public static IEnumerator ActivateTransition(Animator transitionAnimator, string parameterToTrigger, float duration)
     {
         transitionAnimator.SetTrigger(parameterToTrigger);
         string clipName = transitionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-
-        //Debug.Log(clipName + ", " + transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName(clipName));
 
         while (transitionAnimator.GetCurrentAnimatorStateInfo(0).IsName(clipName))
         {
