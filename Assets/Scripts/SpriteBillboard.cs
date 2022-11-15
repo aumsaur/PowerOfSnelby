@@ -12,9 +12,15 @@ public class SpriteBillboard : MonoBehaviour
 
     private void Start()
     {
-        _mainTransform = GetComponentInParent<Transform>();
-        _animator = GetComponent<Animator>();
+        _mainTransform = transform.parent;
+
+
         _renderer = GetComponent<SpriteRenderer>();
+
+        if (TryGetComponent<Animator>(out Animator buffer))
+        {
+            _animator = buffer;
+        }
     }
 
     void LateUpdate()
@@ -46,11 +52,11 @@ public class SpriteBillboard : MonoBehaviour
 
             if (signedAngle < 0)
             {
-                _renderer.flipX = true;
+                _renderer.flipX = false;
             }
             else
             {
-                _renderer.flipX = false;
+                _renderer.flipX = true;
             }
         }
         else // Look from Neither (Front)
@@ -58,7 +64,11 @@ public class SpriteBillboard : MonoBehaviour
             animationDirection = new Vector2(0f, 1f);
         }
 
-        _animator.SetFloat("X", animationDirection.x);
-        _animator.SetFloat("Y", animationDirection.y);
+        if (_animator != null)
+        {
+            _animator.SetFloat("X", animationDirection.x);
+            _animator.SetFloat("Y", animationDirection.y);
+        }
+
     }
 }

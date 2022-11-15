@@ -90,6 +90,8 @@ public class CharacterController : MonoBehaviour, ICharacterController
         // Handle initial state
         TransitionToState(CharacterState.Default);
 
+        Motor = GetComponent<KinematicCharacterMotor>();
+
         // Assign the characterController to the motor
         Motor.CharacterController = this;
     }
