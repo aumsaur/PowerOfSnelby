@@ -2831,6 +2831,31 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1407707521613745537, guid: b6c8dabe58badfc4fb6698921f28ff6d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407707521613745537, guid: b6c8dabe58badfc4fb6698921f28ff6d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407707521613745537, guid: b6c8dabe58badfc4fb6698921f28ff6d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407707521613745537, guid: b6c8dabe58badfc4fb6698921f28ff6d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407707521613745537, guid: b6c8dabe58badfc4fb6698921f28ff6d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3127073908736022995, guid: b6c8dabe58badfc4fb6698921f28ff6d,
         type: 3}
       propertyPath: m_RootOrder
@@ -2890,6 +2915,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Chicken
+      objectReference: {fileID: 0}
+    - target: {fileID: 5622437710731413479, guid: b6c8dabe58badfc4fb6698921f28ff6d,
+        type: 3}
+      propertyPath: m_FlipX
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6c8dabe58badfc4fb6698921f28ff6d, type: 3}
