@@ -25,8 +25,7 @@ public static class ProblemGenerator
 
         List<int> baseNumber = new List<int>();
         List<int> powNumber = new List<int>();
-        //string problem = "";
-        //float m_Solve.answer = 0;
+
         int iteration;
 
         Solve m_Solve = new Solve();
@@ -73,14 +72,14 @@ public static class ProblemGenerator
             case 7: // (n ^ a) * (n ^ b) * (n ^ c) * (n ^ d)
                 baseNumber.Add(Random.Range(2, 15));
 
-                iteration = patternSelected == 3 ? 1 : patternSelected == 4 ? 2 : 3;
+                iteration = patternSelected == 5 ? 2 : patternSelected == 6 ? 3 : 4;
 
                 for (int i = 0; i < iteration; i++)
                 {
                     powNumber.Add(Random.Range(1, 10));
 
-                    m_Solve.problem = i == iteration ? baseNumber[0] + "^" + powNumber[i] :
-                                                       baseNumber[0] + "^" + powNumber[i] + "*";
+                    m_Solve.problem = i == iteration - 1 ? baseNumber[0] + "^" + powNumber[i] :
+                                                           baseNumber[0] + "^" + powNumber[i] + "*";
 
                     m_Solve.answer = i == 0 ? m_Solve.answer = Mathf.Pow(baseNumber[0], powNumber[i]) :
                                               m_Solve.answer *= Mathf.Pow(baseNumber[0], powNumber[i]);
@@ -97,12 +96,12 @@ public static class ProblemGenerator
                     powNumber.Add(Random.Range(2, 15));
                 }
 
-                m_Solve.problem = patternSelected == 6 ? baseNumber[0] + "^" + powNumber[0] + "/" + baseNumber[0] + "^" + powNumber[1] :
-                          patternSelected == 7 ? "(" + baseNumber[0] + "^" + powNumber[0] + ")" + powNumber[1] :
+                m_Solve.problem = patternSelected == 8 ? baseNumber[0] + "^" + powNumber[0] + "/" + baseNumber[0] + "^" + powNumber[1] :
+                          patternSelected == 9 ? "(" + baseNumber[0] + "^" + powNumber[0] + ")" + powNumber[1] :
                                                  "1/" + "(" + baseNumber[0] + "^" + powNumber[0] + ")" + powNumber[1];
 
-                m_Solve.answer = patternSelected == 6 ? Mathf.Pow(baseNumber[0], powNumber[0] - powNumber[1]) :
-                         patternSelected == 7 ? Mathf.Pow(Mathf.Pow(baseNumber[0], powNumber[0]), powNumber[1]) :
+                m_Solve.answer = patternSelected == 8 ? Mathf.Pow(baseNumber[0], powNumber[0] - powNumber[1]) :
+                         patternSelected == 9 ? Mathf.Pow(Mathf.Pow(baseNumber[0], powNumber[0]), powNumber[1]) :
                                                 1 / Mathf.Pow(Mathf.Pow(baseNumber[0], powNumber[0]), powNumber[1]);
 
                 break;
@@ -112,20 +111,13 @@ public static class ProblemGenerator
 
                 for (int i = 0; i < 3; i++)
                 {
-                    if (i == 2)
-                    {
-                        powNumber.Add(Random.Range(2, powNumber[0] + powNumber[1]));
-                    }
-                    else
-                    {
-                        powNumber.Add(Random.Range(2, 15));
-                    }
+                    powNumber.Add(Random.Range(2, i == 2 ? powNumber[0] + powNumber[1] : 15));
                 }
 
-                m_Solve.problem = patternSelected == 9 ? baseNumber[0] + "^" + powNumber[0] + "*" + baseNumber[0] + "^" + powNumber[1] + "/" + baseNumber[0] + "^" + powNumber[2] :
-                                                 baseNumber[0] + "^" + powNumber[0] + "/(" + baseNumber[0] + "^" + powNumber[1] + ")" + baseNumber[0] + "^" + powNumber[2];
+                m_Solve.problem = patternSelected == 11 ? baseNumber[0] + "^" + powNumber[0] + "*" + baseNumber[0] + "^" + powNumber[1] + "/" + baseNumber[0] + "^" + powNumber[2] :
+                                                 "(" + baseNumber[0] + "^" + powNumber[0] + ")/(" + baseNumber[0] + "^" + powNumber[1] + ")" + baseNumber[0] + "^" + powNumber[2];
 
-                m_Solve.answer = patternSelected == 9 ? Mathf.Pow(baseNumber[0], powNumber[0] + powNumber[1] - powNumber[2]) :
+                m_Solve.answer = patternSelected == 11 ? Mathf.Pow(baseNumber[0], powNumber[0] + powNumber[1] - powNumber[2]) :
                                                 1 / Mathf.Pow(Mathf.Pow(baseNumber[0], powNumber[0] - powNumber[1]), powNumber[2]);
 
                 break;
@@ -135,31 +127,28 @@ public static class ProblemGenerator
             case 16: // ((n ^ a) * (n' ^ a)) / (n'' ^ a)
                 powNumber.Add(Random.Range(1, 15));
 
-                iteration = new List<int>() { 11, 12 }.Contains(patternSelected) ? 2 : 3;
+                List<int> excludeList = new List<int>() { 13, 14 };
+
+                iteration = excludeList.Contains(patternSelected) ? 2 : 3;
 
                 for (int i = 0; i < iteration; i++)
                 {
-                    if ((patternSelected == 12 && i == 1) || (patternSelected == 14) && i == 2)
-                    {
-                        baseNumber.Add(baseNumber[i - 1] * Random.Range(1, 4));
-                    }
-                    else
-                    {
-                        baseNumber.Add(Random.Range(1, 14));
-                    }
+                    baseNumber.Add((patternSelected == 14 && i == 1) || (patternSelected == 16 && i == 2) ? 
+                        baseNumber[i - 1] / Random.Range(1, 4) : 
+                        Random.Range(1, 14));
                 }
 
-                m_Solve.answer = patternSelected == 12 ? Mathf.Pow(baseNumber[0], powNumber[0]) / Mathf.Pow(baseNumber[1], powNumber[0]) :
+                m_Solve.answer = patternSelected == 14 ? Mathf.Pow(baseNumber[0], powNumber[0]) / Mathf.Pow(baseNumber[1], powNumber[0]) :
                                                  Mathf.Pow(baseNumber[0], powNumber[0]) * Mathf.Pow(baseNumber[1], powNumber[0]);
 
-                m_Solve.answer = patternSelected == 11 || patternSelected == 12 ? m_Solve.answer : 
+                m_Solve.answer = excludeList.Contains(patternSelected) ? m_Solve.answer : 
                                                                           patternSelected == 13 ? m_Solve.answer * Mathf.Pow(baseNumber[2], powNumber[0]) :
                                                                           m_Solve.answer / Mathf.Pow(baseNumber[2], powNumber[0]);
 
-                m_Solve.problem = patternSelected == 12 ? "(" + baseNumber[0] + "^" + powNumber[0] + ")/(" + baseNumber[1] + "^" + powNumber[0] + ")" :
+                m_Solve.problem = patternSelected == 14 ? "(" + baseNumber[0] + "^" + powNumber[0] + ")/(" + baseNumber[1] + "^" + powNumber[0] + ")" :
                                                   "(" + baseNumber[0] + "^" + powNumber[0] + ")*(" + baseNumber[1] + "^" + powNumber[0] + ")";
 
-                m_Solve.problem = patternSelected == 11 || patternSelected == 12 ? m_Solve.problem :
+                m_Solve.problem = excludeList.Contains(patternSelected) ? m_Solve.problem :
                                                                            patternSelected == 13 ? m_Solve.problem + "*" + baseNumber[2] + "^" + powNumber[0] :
                                                                            m_Solve.problem + "/" + baseNumber[2] + "^" + powNumber[0];
 
