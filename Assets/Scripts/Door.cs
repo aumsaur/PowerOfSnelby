@@ -44,6 +44,11 @@ public class Door : InteractableObject
         }
     }
 
+    protected override void OnDrawGizmos()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public virtual IEnumerator Flipflop()
     {
         while (t <= 1f)
@@ -62,12 +67,22 @@ public class Door : InteractableObject
         }
     }
 
-    protected virtual void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
             player = other.GetComponent<Player>();
             Debug.Log("Player Enter");
+        }
+
+    }
+
+    protected virtual void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            player = other.GetComponent<Player>();
+            Debug.Log("Player Stay");
         }
     }
 
