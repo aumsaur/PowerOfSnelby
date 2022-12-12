@@ -7,6 +7,7 @@ using TMPro;
 // maze hud and mechanic handle
 public class MazeSystem : MonoBehaviour
 {
+    
     // reward/penalty handle
     //  
 }
