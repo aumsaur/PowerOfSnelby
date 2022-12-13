@@ -13,18 +13,10 @@ public class Door : InteractableObject
     protected bool isOpen = false;
 
     protected float t = 0f;
-    protected Player player;
 
-    // Start is called before the first frame update
     void Start()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        
     }
 
     public virtual void Unlock()
@@ -44,11 +36,6 @@ public class Door : InteractableObject
         }
     }
 
-    protected override void OnDrawGizmos()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public virtual IEnumerator Flipflop()
     {
         while (t <= 1f)
@@ -64,34 +51,6 @@ public class Door : InteractableObject
         {
             isOpen = !isOpen;
             t = 0f;
-        }
-    }
-
-    protected virtual void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            player = other.GetComponent<Player>();
-            Debug.Log("Player Enter");
-        }
-
-    }
-
-    protected virtual void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            player = other.GetComponent<Player>();
-            Debug.Log("Player Stay");
-        }
-    }
-
-    protected virtual void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            player = null;
-            Debug.Log("Player Exit");
         }
     }
 

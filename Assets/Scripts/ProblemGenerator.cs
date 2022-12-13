@@ -13,12 +13,9 @@ public static class ProblemGenerator
 {
     private static int m_minPattern = 1, m_maxPattern = 18;
 
-    //public static Solve m_Solve = new Solve();
-
     public static int minPattern { get { return m_minPattern; } set { m_minPattern = value; } }
     public static int maxPattern { get { return m_maxPattern; } set { m_minPattern = value; } }
 
-    //public static List<string> GenerateEquation(int baseMinRange, int baseMaxRange, int powMinRange, int powMaxRange)
     public static Solve GenerateEquation()
     {
         int patternSelected = Random.Range(m_minPattern, m_maxPattern);

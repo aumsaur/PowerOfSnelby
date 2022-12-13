@@ -3,6 +3,8 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    public static Timer currentInstance { get; private set; }
+
     [SerializeField] private float timerDuration = 3f * 60f; //Duration of the timer in seconds
 
     [SerializeField] private float flashDuration = 1f; //The full length of the flash
@@ -19,12 +21,15 @@ public class Timer : MonoBehaviour
 
     private float timer;
 
+    public float getTimeRemains { get { return timer; } }
+
     private void Start()
     {
-        ResetTimer();
+        currentInstance = this;
+        stopTimer = true;
     }
 
-    private void ResetTimer()
+    public void ResetTimer()
     {
         stopTimer = false;
 
@@ -83,18 +88,6 @@ public class Timer : MonoBehaviour
 
     private void FlashTimer()
     {
-        //if (countDown && timer != 0)
-        //{
-        //    timer = 0;
-        //    UpdateTimerDisplay(timer);
-        //}
-
-        //if (!countDown && timer != timerDuration)
-        //{
-        //    timer = timerDuration;
-        //    UpdateTimerDisplay(timer);
-        //}
-
         timer = timer > 0 ? timer : 0;
 
         if (flashTimer <= 0)

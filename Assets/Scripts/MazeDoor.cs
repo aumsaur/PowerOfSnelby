@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -18,15 +17,9 @@ public class MazeDoor : Door
         newFloatingText.GetComponentInChildren<TextMeshPro>().text = "";
     }
 
-    // Update is called once per frame
-    private void Update()
-    {
-        
-    }
-
     public override void Interact()
     {
-        StartCoroutine(Dissolve());
+        //StartCoroutine(Dissolve());
     }
 
     IEnumerator Dissolve()
@@ -41,16 +34,7 @@ public class MazeDoor : Door
         if (other.gameObject.CompareTag("Player"))
         {
             player = other.GetComponent<Player>();
-            // do something about player
-            if (isCorrectDoor)
-            {
-                StartCoroutine(Dissolve());
-                // reward
-            }
-            else
-            {
-                // penalty
-            }
+            MazeHandler.currentInstance.GrantReward(isCorrectDoor, Dissolve());
         }
     }
 }
