@@ -9,6 +9,8 @@ public class CharacterHUD : MonoBehaviour
 {
     public static CharacterHUD currentInstance;
 
+    public Vector2 currentInputEquation { get; private set; }
+
     [SerializeField] private TextMeshProUGUI baseText;
     [SerializeField] private TextMeshProUGUI powerText;
     [SerializeField] private TextMeshProUGUI equationText;
@@ -22,7 +24,8 @@ public class CharacterHUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       currentInstance = this;
+        currentInstance = this;
+        currentInputEquation = new Vector2(Int16.Parse(baseText.text), Int16.Parse(powerText.text));
     }
 
     public void UpdateEquation(string equation)
@@ -34,6 +37,7 @@ public class CharacterHUD : MonoBehaviour
     {
         baseText.text = input.x.ToString();
         powerText.text = input.y.ToString();
+        currentInputEquation = new Vector2(input.x, input.y);
     }
 
     public void UpdateStreak(int streak)
