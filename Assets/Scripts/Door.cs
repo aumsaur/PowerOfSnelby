@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEditor;
 using UnityEngine;
 
@@ -65,7 +63,7 @@ public class Door : InteractableObject
             Door script = (Door)target;
             if (GUILayout.Button("Interact"))
             {
-                script.Interact(); // how do i call this?
+                script.Interact();
             }
         }
     }

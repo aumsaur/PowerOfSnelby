@@ -33,9 +33,6 @@ public abstract class InteractableObject : MonoBehaviour
         {
             player = other.GetComponent<Player>();
             isInRange = true;
-            Debug.Log("Player Enter");
-            
-            // Trigger
         }
 
     }
@@ -46,9 +43,6 @@ public abstract class InteractableObject : MonoBehaviour
         {
             player = other.GetComponent<Player>();
             isInRange = true;
-            Debug.Log("Player Stay");
-
-            // Draw someting to let player know can be interact with
         }
     }
 
@@ -58,7 +52,6 @@ public abstract class InteractableObject : MonoBehaviour
         {
             player = null;
             isInRange = false;
-            Debug.Log("Player Exit");
         }
     }
 }

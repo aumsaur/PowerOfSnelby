@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class ScoreHandler : MonoBehaviour
 {
@@ -24,14 +21,9 @@ public class ScoreHandler : MonoBehaviour
         currentInstance = this;
     }
 
-    public void TestAccess(int something)
-    {
-        Debug.Log("Something pass as" + something);
-    }
-
     public void AddScore(int scoreToAdd)
     {
-        totalScore.text = (_totalScore + scoreToAdd).ToString();
+        totalScore.text = (_totalScore + scoreToAdd).ToString().PadLeft(8, '0');
 
         GameObject newFloatingText = Instantiate(floatingTextPrefabs, transform.position, Quaternion.identity, transform);
         newFloatingText.GetComponentInChildren<TextMeshPro>().text = scoreToAdd > 0 ? "+ " + scoreToAdd.ToString() : "- " + scoreToAdd.ToString();

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using TMPro;
 
 public class Timer : MonoBehaviour
@@ -120,4 +121,21 @@ public class Timer : MonoBehaviour
         stopTimer = true;
         return timer;
     }
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(Timer))]
+    public class TimerEditor : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            DrawDefaultInspector();
+
+            Timer script = (Timer)target;
+            if (GUILayout.Button("Reset Timer"))
+            {
+                script.ResetTimer();
+            }
+        }
+    }
+#endif
 }

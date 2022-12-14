@@ -11,7 +11,7 @@ public static class TransitionController
         {
             transitionMaterial.SetFloat(propertyName, 0f);
 
-            while (transitionMaterial.GetFloat(propertyName) <= 1f)
+            while (transitionMaterial.GetFloat(propertyName) < 1f)
             {
                 transitionMaterial.SetFloat(propertyName, Mathf.MoveTowards(transitionMaterial.GetFloat(propertyName), 1f, 1 / duration * Time.deltaTime));
                 yield return null;
@@ -21,7 +21,7 @@ public static class TransitionController
         {
             transitionMaterial.SetFloat(propertyName, 1f);
 
-            while (transitionMaterial.GetFloat(propertyName) >= 0f)
+            while (transitionMaterial.GetFloat(propertyName) > 0f)
             {
                 transitionMaterial.SetFloat(propertyName, Mathf.MoveTowards(transitionMaterial.GetFloat(propertyName), 0f, 1 / duration * Time.deltaTime));
                 yield return null;
