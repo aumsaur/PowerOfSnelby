@@ -11,17 +11,28 @@ public class MenuHandler : MonoBehaviour
     [SerializeField] private int RoamingSceneID;
     public int BattleSceneID;
 
+    [SerializeField] private int IntroSceneID;
+
+    public void OnStartScene()
+    {
+        if (transitionAnimator != null)
+            StartCoroutine(TransitionController.ActivateTransition(transitionAnimator, propertyField, null));
+        LevelLoader.currentInstance.LoadScene(IntroSceneID);
+    }
+
     // Start is called before the first frame update
     public void OnBackToMenu()
     {
-        StartCoroutine(TransitionController.ActivateTransition(transitionAnimator, propertyField, null));
-        LevelLoader.currentInstance.LoadSceneAsync(MenuSceneID);
+        if (transitionAnimator != null)
+            StartCoroutine(TransitionController.ActivateTransition(transitionAnimator, propertyField, null));
+        LevelLoader.currentInstance.LoadScene(MenuSceneID);
     }
 
     public void OnContinue()
     {
-        StartCoroutine(TransitionController.ActivateTransition(transitionAnimator, propertyField, null));
-        LevelLoader.currentInstance.LoadSceneAsync(RoamingSceneID);
+        if (transitionAnimator != null)
+            StartCoroutine(TransitionController.ActivateTransition(transitionAnimator, propertyField, null));
+        LevelLoader.currentInstance.LoadScene(RoamingSceneID);
     }
 
     public void OnQuitGame()

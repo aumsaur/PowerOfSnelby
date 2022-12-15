@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/BattleScene.unity
     guid: b14caaad355919d40bfc41acc972ec1e
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 74f679e35f1f89242a9405682e0570bf
-  - enabled: 1
     path: Assets/Scenes/Intro-story1.1.unity
     guid: 3646d850efd8d564db78c3375115cd11
   - enabled: 1

@@ -52,11 +52,17 @@ public class SpriteBillboard : MonoBehaviour
 
             if (signedAngle < 0)
             {
-                _renderer.flipX = false;
+                if (_renderer != null)
+                    _renderer.flipX = false;
+                else
+                    transform.Rotate(new Vector3(0, 0, 0));
             }
             else
             {
-                _renderer.flipX = true;
+                if (_renderer != null)
+                    _renderer.flipX = true;
+                else
+                    transform.Rotate(new Vector3(0, 180, 0));
             }
         }
         else // Look from Neither (Front)
