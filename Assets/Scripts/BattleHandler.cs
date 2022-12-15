@@ -16,6 +16,7 @@ public class BattleHandler : MonoBehaviour
     [SerializeField] private Transform enemyStation;
 
     [SerializeField] private Vector2 input;
+    [SerializeField] private bool sign;
 
     [Tooltip("x: On Correct\ny: On Incorrect"), SerializeField] private Vector2 flatScore = new Vector2(50,30);
 
@@ -41,13 +42,14 @@ public class BattleHandler : MonoBehaviour
         GameObject enemy = Instantiate(enemyPrefab, enemyStation);
 
         yield return null;
-        input = CharacterHUD.currentInstance.currentInputEquation;
+        input = HUDHandler.currentInstance.currentInputEquation;
+        sign = HUDHandler.currentInstance.currentSign;
 
         yield return new WaitForSeconds(3);
 
         Timer.currentInstance.ResetTimer();
 
-        UpdateProblem();
+        StartCoroutine(UpdateProblem());
     }
 
     private void EndBattle()
@@ -65,26 +67,40 @@ public class BattleHandler : MonoBehaviour
 
         // Handle Problem UI
 
-        CharacterHUD.currentInstance.UpdateEquation("...");
+        HUDHandler.currentInstance.UpdateEquation("...");
 
         yield return new WaitForSeconds(1);
 
-        CharacterHUD.currentInstance.UpdateEquation(solveEq.problem);
+        HUDHandler.currentInstance.UpdateEquation(solveEq.problem);
+        state = BattleState.WAITFORPLAYER;
     }
 
-    private bool CheckAnswer(float input)
+    private bool CheckAnswer()
     {
         // in case of user correct or not
-        return input == solveEq.answer;
+        //if (sign)
+        //{
+        //    return Mathf.Pow(input.x, input.y) == solveEq.answer;
+        //}
+        //else
+        //{
+        //    return Mathf.Pow(input.x, input.y * -1) == solveEq.answer;
+        //}
+        return sign ? Mathf.Pow(input.x, input.y) == solveEq.answer : Mathf.Pow(input.x, input.y * -1) == solveEq.answer;
     }
 
     public void OnSubmitButton()
     {
+        if (state != BattleState.WAITFORPLAYER)
+        {
+            return;
+        }
+
         // validation user input
-        if (!CheckAnswer(Mathf.Pow(input.x, input.y)))
+        if (!CheckAnswer())
         {
             // Deduct Flatscore, Reset multiplier, Add attempt
-            multiplier = 1;
+            multiplier = 0;
             attempts += 1;
             state = BattleState.WRONG;
         }
@@ -96,7 +112,7 @@ public class BattleHandler : MonoBehaviour
             state = BattleState.RIGHT;
         }
 
-        CharacterHUD.currentInstance.UpdateStreak(multiplier);
+        HUDHandler.currentInstance.UpdateStreak(multiplier);
 
         // Continue or not?
         if (Timer.currentInstance.getTimeRemains > 0)
@@ -110,7 +126,7 @@ public class BattleHandler : MonoBehaviour
             {
                 ScoreHandler.currentInstance.AddScore((int)Mathf.Abs(attempts <= 4 ? flatScore.x - ((attempts - 1) * 10) : flatScore.x - 30) * 1 + multiplier/10);
                 // message, user right
-                UpdateProblem();
+                StartCoroutine(UpdateProblem());
             }            
         }
         else
@@ -123,13 +139,18 @@ public class BattleHandler : MonoBehaviour
     {
         input.x += isRaise ? (input.x < 25 ? 1 : -24) : (input.x > 1 ? -1 : 24);
         
-        CharacterHUD.currentInstance.UpdateInputEquation(input);
+        HUDHandler.currentInstance.UpdateInputEquation(input);
     }
 
     public void OnPowerButton(bool isRaise)
     {
         input.y += isRaise ? (input.y < 25 ? 1 : -24) : (input.y > 1 ? -1 : 24);
         
-        CharacterHUD.currentInstance.UpdateInputEquation(input);
+        HUDHandler.currentInstance.UpdateInputEquation(input);
+    }
+
+    public void OnPosNegButton()
+    {
+        sign = HUDHandler.currentInstance.UpdateSign();
     }
 }

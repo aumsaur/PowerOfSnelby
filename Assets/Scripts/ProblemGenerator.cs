@@ -11,7 +11,7 @@ public struct Solve
 
 public static class ProblemGenerator
 {
-    private static int m_minPattern = 1, m_maxPattern = 18;
+    private static int m_minPattern = 1, m_maxPattern = 12;
 
     public static int minPattern { get { return m_minPattern; } set { m_minPattern = value; } }
     public static int maxPattern { get { return m_maxPattern; } set { m_minPattern = value; } }
@@ -71,11 +71,15 @@ public static class ProblemGenerator
 
                 iteration = patternSelected == 5 ? 2 : patternSelected == 6 ? 3 : 4;
 
+                int _buffer = 0;
+
                 for (int i = 0; i < iteration; i++)
                 {
-                    powNumber.Add(Random.Range(1, 10));
+                    powNumber.Add(Random.Range(1, _buffer < 15 ? 10 : 22 - _buffer < 1 ? 22 - _buffer : 1));
 
-                    m_Solve.problem = i == iteration - 1 ? baseNumber[0] + "^" + powNumber[i] :
+                    _buffer += powNumber[i];
+
+                    m_Solve.problem += i == iteration - 1 ? baseNumber[0] + "^" + powNumber[i] :
                                                            baseNumber[0] + "^" + powNumber[i] + "*";
 
                     m_Solve.answer = i == 0 ? m_Solve.answer = Mathf.Pow(baseNumber[0], powNumber[i]) :
@@ -90,7 +94,7 @@ public static class ProblemGenerator
 
                 for (int i = 0; i < 2; i++)
                 {
-                    powNumber.Add(Random.Range(2, 15));
+                    powNumber.Add(Random.Range(2, 6));
                 }
 
                 m_Solve.problem = patternSelected == 8 ? baseNumber[0] + "^" + powNumber[0] + "/" + baseNumber[0] + "^" + powNumber[1] :
@@ -108,7 +112,7 @@ public static class ProblemGenerator
 
                 for (int i = 0; i < 3; i++)
                 {
-                    powNumber.Add(Random.Range(2, i == 2 ? powNumber[0] + powNumber[1] : 15));
+                    powNumber.Add(Random.Range(2, i > 0 ? 12 - powNumber[i-1] : 15));
                 }
 
                 m_Solve.problem = patternSelected == 11 ? baseNumber[0] + "^" + powNumber[0] + "*" + baseNumber[0] + "^" + powNumber[1] + "/" + baseNumber[0] + "^" + powNumber[2] :
@@ -172,6 +176,7 @@ public static class ProblemGenerator
 
         //m_Solve.answer = (int)Mathf.Pow(baseNumber[0], powNumber[0]);
 
+        Debug.Log(patternSelected);
         Debug.Log(m_Solve.problem);
         Debug.Log(m_Solve.answer);
 

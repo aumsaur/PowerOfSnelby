@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-using UnityEngine.Windows;
 
-public class CharacterHUD : MonoBehaviour
+public class HUDHandler : MonoBehaviour
 {
-    public static CharacterHUD currentInstance;
+    public static HUDHandler currentInstance;
 
     public Vector2 currentInputEquation { get; private set; }
+    public bool currentSign { get; private set; }
 
     [SerializeField] private TextMeshProUGUI baseText;
     [SerializeField] private TextMeshProUGUI powerText;
+    [SerializeField] private TextMeshProUGUI signText;
+
     [SerializeField] private TextMeshProUGUI equationText;
+    
     [SerializeField] private TextMeshProUGUI streakText;
     [SerializeField] private TextMeshProUGUI progressText;
 
@@ -26,6 +29,7 @@ public class CharacterHUD : MonoBehaviour
     {
         currentInstance = this;
         currentInputEquation = new Vector2(Int16.Parse(baseText.text), Int16.Parse(powerText.text));
+        currentSign = true;
     }
 
     public void UpdateEquation(string equation)
@@ -40,6 +44,13 @@ public class CharacterHUD : MonoBehaviour
         currentInputEquation = new Vector2(input.x, input.y);
     }
 
+    public bool UpdateSign()
+    {
+        signText.text = signText.text == "+" ? "-" : "+";
+        currentSign = !currentSign;
+        return signText.text == "+";
+    }
+
     public void UpdateStreak(int streak)
     {
         switch (streak)
@@ -48,7 +59,6 @@ public class CharacterHUD : MonoBehaviour
                 streakText.enabled = false;
                 break;
             default:
-                _progress += 1;
                 streakText.enabled = true;
                 streakText.text = streak.ToString();
                 break;
