@@ -9,7 +9,6 @@ public class HUDHandler : MonoBehaviour
     public static HUDHandler currentInstance;
 
     public Vector2 currentInputEquation { get; private set; }
-    public bool currentSign { get; private set; }
 
     [SerializeField] private TextMeshProUGUI baseText;
     [SerializeField] private TextMeshProUGUI powerText;
@@ -19,17 +18,34 @@ public class HUDHandler : MonoBehaviour
     
     [SerializeField] private TextMeshProUGUI streakText;
     [SerializeField] private TextMeshProUGUI progressText;
+    [SerializeField] private TextMeshProUGUI progressTargetText;
+
+    [SerializeField] private GameObject summaryOverlay;
+    [SerializeField] private TextMeshProUGUI summaryScore;
+    [SerializeField] private TextMeshProUGUI progressScore;
+    [SerializeField] private TextMeshProUGUI progressRequire;
+    [SerializeField] private GameObject floatingTextPrefabs;
 
     private int _progress;
-
-    //[VectorLabels("Base Input", "Power Input"), SerializeField] private Vector2 input = new Vector2(1,1);
+    private int _progressRequire;
 
     // Start is called before the first frame update
     void Start()
     {
         currentInstance = this;
         currentInputEquation = new Vector2(Int16.Parse(baseText.text), Int16.Parse(powerText.text));
-        currentSign = true;
+        summaryOverlay.SetActive(false);
+        StartCoroutine(SetupHUD());
+    }
+
+    public IEnumerator SetupHUD(bool sign = true,int progressRequire = 10)
+    {
+        yield return null;
+        _progressRequire = progressRequire;
+        signText.text = sign ? "+" : "-";
+
+        yield return new WaitForSeconds(3);
+        progressTargetText.text = progressRequire.ToString();
     }
 
     public void UpdateEquation(string equation)
@@ -47,7 +63,6 @@ public class HUDHandler : MonoBehaviour
     public bool UpdateSign()
     {
         signText.text = signText.text == "+" ? "-" : "+";
-        currentSign = !currentSign;
         return signText.text == "+";
     }
 
@@ -64,5 +79,17 @@ public class HUDHandler : MonoBehaviour
                 break;
         }
         progressText.text = _progress.ToString();
+        progressText.color = _progress > _progressRequire ? ScoreHandler.currentInstance.progressOver :
+            _progress == _progressRequire ? progressText.color :
+            ScoreHandler.currentInstance.progressBelow;
+    }
+
+    public void ShowSummary(int progressScore)
+    {
+        summaryOverlay.SetActive(true);
+        summaryScore.text = ScoreHandler.currentInstance.GetSummary(progressScore).ToString();
+        this.progressScore.text = progressText.text;
+        this.progressScore.color = progressText.color;
+        progressRequire.text = progressTargetText.text;
     }
 }

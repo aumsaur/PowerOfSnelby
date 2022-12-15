@@ -16,9 +16,10 @@ public class BattleHandler : MonoBehaviour
     [SerializeField] private Transform enemyStation;
 
     [SerializeField] private Vector2 input;
-    [SerializeField] private bool sign;
+    [SerializeField] private bool sign = true;
 
-    [Tooltip("x: On Correct\ny: On Incorrect"), SerializeField] private Vector2 flatScore = new Vector2(50,30);
+    [SerializeField] private int progressRequire = 10;
+    [Tooltip("x: On Correct\ny: On Incorrect\n z: On Over"), SerializeField] private Vector3 flatScore = new Vector3(50, 30, 40);
 
     [SerializeField] private int attempts;
 
@@ -43,7 +44,7 @@ public class BattleHandler : MonoBehaviour
 
         yield return null;
         input = HUDHandler.currentInstance.currentInputEquation;
-        sign = HUDHandler.currentInstance.currentSign;
+        StartCoroutine(HUDHandler.currentInstance.SetupHUD(sign, progressRequire));
 
         yield return new WaitForSeconds(3);
 
@@ -55,6 +56,7 @@ public class BattleHandler : MonoBehaviour
     private void EndBattle()
     {
         //dialogueText.text = state == BattleState.WON ? "Win" : state == BattleState.LOST ? "Defeat" : dialogueText.text;
+        HUDHandler.currentInstance.ShowSummary((int)flatScore.z);
     }
 
     private IEnumerator UpdateProblem()
