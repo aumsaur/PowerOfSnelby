@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public enum BattleState { START , GENERATE, WAITFORPLAYER, RIGHT, WRONG, WON, LOST}
+public enum BattleState { START , GENERATE, WAITFORPLAYER, RIGHT, WRONG, CONCLUDE,WON, LOST}
 
 // START -> GENERATE -> WAITFORPLAYER -> VALIDATE -> TIMEREMAIN -> GENERATE -> ... -> VALIDATE -> TIMEUP -> END -> CONCLUDE
 
@@ -93,25 +93,23 @@ public class BattleHandler : MonoBehaviour
 
     public void OnSubmitButton()
     {
-        if (state != BattleState.WAITFORPLAYER)
+        if (state == BattleState.WAITFORPLAYER)
         {
-            return;
-        }
-
-        // validation user input
-        if (!CheckAnswer())
-        {
-            // Deduct Flatscore, Reset multiplier, Add attempt
-            multiplier = 0;
-            attempts += 1;
-            state = BattleState.WRONG;
-        }
-        else
-        {
-            // Add multiplier, score * multiplier, Reset attempt
-            multiplier += 1;
-            attempts = 0;
-            state = BattleState.RIGHT;
+            // validation user input
+            if (!CheckAnswer())
+            {
+                // Deduct Flatscore, Reset multiplier, Add attempt
+                multiplier = 0;
+                attempts += 1;
+                state = BattleState.WRONG;
+            }
+            else
+            {
+                // Add multiplier, score * multiplier, Reset attempt
+                multiplier += 1;
+                attempts = 0;
+                state = BattleState.RIGHT;
+            }
         }
 
         HUDHandler.currentInstance.UpdateStreak(multiplier);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class HUDHandler : MonoBehaviour
 {
@@ -76,12 +77,13 @@ public class HUDHandler : MonoBehaviour
             default:
                 streakText.enabled = true;
                 streakText.text = streak.ToString();
+                _progress += 1;
                 break;
         }
+        Debug.Log(_progress);
         progressText.text = _progress.ToString();
-        progressText.color = _progress > _progressRequire ? ScoreHandler.currentInstance.progressOver :
-            _progress == _progressRequire ? progressText.color :
-            ScoreHandler.currentInstance.progressBelow;
+        progressText.color = _progress > _progressRequire ? ScoreHandler.currentInstance.progressOver :progressText.color;
+        Debug.Log(ScoreHandler.currentInstance.progressOver);
     }
 
     public void ShowSummary(int progressScore)
@@ -89,7 +91,8 @@ public class HUDHandler : MonoBehaviour
         summaryOverlay.SetActive(true);
         summaryScore.text = ScoreHandler.currentInstance.GetSummary(progressScore).ToString();
         this.progressScore.text = progressText.text;
-        this.progressScore.color = progressText.color;
+        this.progressScore.color = _progress >= _progressRequire ? progressText.color : ScoreHandler.currentInstance.progressBelow;
+        Debug.Log(ScoreHandler.currentInstance.progressOver);
         progressRequire.text = progressTargetText.text;
     }
 }
