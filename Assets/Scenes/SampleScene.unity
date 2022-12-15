@@ -784,7 +784,8 @@ MonoBehaviour:
   isLocked: 0
   isCorrectDoor: 0
   timeToDissolve: 0
-  floatingTextPrefabs: {fileID: 0}
+  floatingTextPrefabs: {fileID: 7083322526438926191, guid: 95668a9fe28429549b72f8e5eac3627e,
+    type: 3}
 --- !u!1001 &248056727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3801,7 +3802,8 @@ MonoBehaviour:
   isLocked: 0
   isCorrectDoor: 1
   timeToDissolve: 4
-  floatingTextPrefabs: {fileID: 0}
+  floatingTextPrefabs: {fileID: 7083322526438926191, guid: 95668a9fe28429549b72f8e5eac3627e,
+    type: 3}
 --- !u!65 &1077798759
 BoxCollider:
   m_ObjectHideFlags: 0
