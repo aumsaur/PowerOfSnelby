@@ -23,6 +23,8 @@ public class BattleHandler : MonoBehaviour
 
     [SerializeField] private int attempts;
 
+    [SerializeField] private float timerDuration = 3f * 60f; //Duration of the timer in seconds
+
     //[SerializeField] private Text dialogueText;
 
     private int multiplier = 1;
@@ -44,6 +46,7 @@ public class BattleHandler : MonoBehaviour
 
         yield return null;
         input = HUDHandler.currentInstance.currentInputEquation;
+        Timer.currentInstance.timerDuration = timerDuration;
         StartCoroutine(HUDHandler.currentInstance.SetupHUD(sign, progressRequire));
 
         yield return new WaitForSeconds(3);
@@ -111,7 +114,7 @@ public class BattleHandler : MonoBehaviour
                 state = BattleState.RIGHT;
             }
         }
-
+        Debug.Log(CheckAnswer());
         HUDHandler.currentInstance.UpdateStreak(multiplier);
 
         // Continue or not?

@@ -6,7 +6,7 @@ public class Timer : MonoBehaviour
 {
     public static Timer currentInstance { get; private set; }
 
-    [SerializeField] private float timerDuration = 3f * 60f; //Duration of the timer in seconds
+    public float timerDuration { get; set; }
 
     [SerializeField] private float flashDuration = 1f; //The full length of the flash
 

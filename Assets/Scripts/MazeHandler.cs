@@ -26,5 +26,6 @@ public class MazeHandler : MonoBehaviour
         }
 
         ScoreHandler.currentInstance.AddScore(isCorrectDoor ? (int)Mathf.Abs(flatScore.x) : -(int)Mathf.Abs(flatScore.y));
+        
     }  
 }

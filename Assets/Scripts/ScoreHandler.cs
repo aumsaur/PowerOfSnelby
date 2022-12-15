@@ -25,7 +25,6 @@ public class ScoreHandler : MonoBehaviour
     void Start()
     {
         currentInstance = this;
-        Debug.Log(currentInstance.progressOver);
     }
 
     public int GetSummary(int progressScore)
@@ -35,7 +34,8 @@ public class ScoreHandler : MonoBehaviour
 
     public void AddScore(int scoreToAdd)
     {
-        totalScore.text = (_totalScore + scoreToAdd).ToString().PadLeft(8, '0');
+        _totalScore += scoreToAdd;
+        totalScore.text = (_totalScore).ToString().PadLeft(8, '0');
         if (scoreToAdd > 0)
         {
             _progress += 1;

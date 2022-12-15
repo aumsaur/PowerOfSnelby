@@ -4,12 +4,19 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader: MonoBehaviour
 {
+    public static LevelLoader currentInstance { get; private set; }
+
     [SerializeField] private Material _material; // SceneTransition Material
     [SerializeField] private Animator _animator; // SceneTransition Animator
 
     [SerializeField] private string _fieldName; // Var to manipulate in SceneTransition
 
     [SerializeField] private float _duration; // Duration of transition
+
+    private void Start()
+    {
+        currentInstance = this;
+    }
 
     public void LoadScene(int levelIndex)
     {
@@ -21,7 +28,7 @@ public class LevelLoader: MonoBehaviour
         StartCoroutine(LoadSceneAsync(levelName));
     }
 
-    IEnumerator LoadSceneAsync(int levelIndex)
+    public IEnumerator LoadSceneAsync(int levelIndex)
     {
         AsyncOperation progress = SceneManager.LoadSceneAsync(levelIndex);
         while (!progress.isDone)
@@ -29,7 +36,7 @@ public class LevelLoader: MonoBehaviour
             yield return null;
         }
     }
-    IEnumerator LoadSceneAsync(string levelName)
+    public IEnumerator LoadSceneAsync(string levelName)
     {
         AsyncOperation progress = SceneManager.LoadSceneAsync(levelName);
         while (!progress.isDone)

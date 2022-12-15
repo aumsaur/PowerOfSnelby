@@ -37,7 +37,7 @@ public class MazeDoor : Door
             yield return null;
         }
         gameObject.SetActive(false);
-        newFloatingText.SetActive(false);
+        // newFloatingText.SetActive(false);
     }
 
     protected override void OnTriggerEnter(Collider other)
