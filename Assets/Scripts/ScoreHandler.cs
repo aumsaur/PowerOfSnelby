@@ -35,6 +35,10 @@ public class ScoreHandler : MonoBehaviour
     public void AddScore(int scoreToAdd)
     {
         _totalScore += scoreToAdd;
+        if (_totalScore < 0)
+        {
+            _totalScore = 0;
+        }
         totalScore.text = (_totalScore).ToString().PadLeft(8, '0');
         if (scoreToAdd > 0)
         {
