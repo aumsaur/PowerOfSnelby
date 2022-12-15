@@ -19,7 +19,7 @@ public class BattleHandler : MonoBehaviour
     [SerializeField] private bool sign = true;
 
     [SerializeField] private int progressRequire = 10;
-    [Tooltip("x: On Correct\ny: On Incorrect\n z: On Over"), SerializeField] private Vector3 flatScore = new Vector3(50, 30, 40);
+    [Tooltip("x: On Correct\ny: On Incorrect\n z: On Over"), SerializeField] private Vector3 flatScore = new Vector3(50, 10, 40);
 
     [SerializeField] private int attempts;
 
@@ -83,15 +83,15 @@ public class BattleHandler : MonoBehaviour
     private bool CheckAnswer()
     {
         // in case of user correct or not
-        //if (sign)
-        //{
-        //    return Mathf.Pow(input.x, input.y) == solveEq.answer;
-        //}
-        //else
-        //{
-        //    return Mathf.Pow(input.x, input.y * -1) == solveEq.answer;
-        //}
-        return sign ? Mathf.Pow(input.x, input.y) == solveEq.answer : Mathf.Pow(input.x, input.y * -1) == solveEq.answer;
+        if (sign)
+        {
+            return Mathf.Pow(input.x, input.y) == solveEq.answer;
+        }
+        else
+        {
+            return Mathf.Pow(input.x, input.y * -1) == solveEq.answer;
+        }
+        //return sign ? Mathf.Pow(input.x, input.y) == solveEq.answer : Mathf.Pow(input.x, input.y * -1) == solveEq.answer;
     }
 
     public void OnSubmitButton()
@@ -114,7 +114,7 @@ public class BattleHandler : MonoBehaviour
                 state = BattleState.RIGHT;
             }
         }
-        Debug.Log(CheckAnswer());
+        Debug.Log(Mathf.Pow(input.x, input.y) + ";" + solveEq.answer);
         HUDHandler.currentInstance.UpdateStreak(multiplier);
 
         // Continue or not?
@@ -123,11 +123,15 @@ public class BattleHandler : MonoBehaviour
             if (state == BattleState.WRONG)
             {
                 ScoreHandler.currentInstance.AddScore(-(int)Mathf.Abs(flatScore.y));
+                if (attempts < 5)
+                {
+                    state = BattleState.WAITFORPLAYER;
+                }
                 // message, user wrong
             }
             if (state == BattleState.RIGHT || attempts > 4)
             {
-                ScoreHandler.currentInstance.AddScore((int)Mathf.Abs(attempts <= 4 ? flatScore.x - ((attempts - 1) * 10) : flatScore.x - 30) * 1 + multiplier/10);
+                ScoreHandler.currentInstance.AddScore((int)Mathf.Abs(flatScore.x * multiplier));
                 // message, user right
                 StartCoroutine(UpdateProblem());
             }            

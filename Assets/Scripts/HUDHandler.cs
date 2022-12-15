@@ -80,10 +80,8 @@ public class HUDHandler : MonoBehaviour
                 _progress += 1;
                 break;
         }
-        Debug.Log(_progress);
         progressText.text = _progress.ToString();
         progressText.color = _progress > _progressRequire ? ScoreHandler.currentInstance.progressOver :progressText.color;
-        Debug.Log(ScoreHandler.currentInstance.progressOver);
     }
 
     public void ShowSummary(int progressScore)
@@ -92,7 +90,6 @@ public class HUDHandler : MonoBehaviour
         summaryScore.text = ScoreHandler.currentInstance.GetSummary(progressScore).ToString();
         this.progressScore.text = progressText.text;
         this.progressScore.color = _progress >= _progressRequire ? progressText.color : ScoreHandler.currentInstance.progressBelow;
-        Debug.Log(ScoreHandler.currentInstance.progressOver);
         progressRequire.text = progressTargetText.text;
     }
 }
