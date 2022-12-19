@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 public enum BattleState { START , GENERATE, WAITFORPLAYER, RIGHT, WRONG, CONCLUDE,WON, LOST}
+public enum Difficulty { EASY, INTERMEDIATE, CHALLENGE }
 
 // START -> GENERATE -> WAITFORPLAYER -> VALIDATE -> TIMEREMAIN -> GENERATE -> ... -> VALIDATE -> TIMEUP -> END -> CONCLUDE
 
@@ -11,23 +12,24 @@ public class BattleHandler : MonoBehaviour
 
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private BattleUnit enemyBattleUnit;
 
     [SerializeField] private Transform playerStation;
     [SerializeField] private Transform enemyStation;
 
-    [SerializeField] private Vector2 input;
-    [SerializeField] private bool sign = true;
-
-    [SerializeField] private int progressRequire = 10;
-    [Tooltip("x: On Correct\ny: On Incorrect\n z: On Over"), SerializeField] private Vector3 flatScore = new Vector3(50, 10, 40);
-
     [SerializeField] private int attempts;
+    [SerializeField] private bool debugMode;
+    [SerializeField] private int debugTopic;
 
-    [SerializeField] private float timerDuration = 3f * 60f; //Duration of the timer in seconds
+    private Vector2 input;
+    private bool sign = true;
 
-    //[SerializeField] private Text dialogueText;
+    private int progressRequire;
+    private Vector3 flatScore;
 
-    private int multiplier = 1;
+    private Difficulty _difficulty;
+
+    private int multiplier;
 
     private Solve solveEq;
 
@@ -45,8 +47,15 @@ public class BattleHandler : MonoBehaviour
         GameObject enemy = Instantiate(enemyPrefab, enemyStation);
 
         yield return null;
+
+        ProblemGenerator.patternPools = enemyBattleUnit.topics;
+        
         input = HUDHandler.currentInstance.currentInputEquation;
-        Timer.currentInstance.timerDuration = timerDuration;
+
+        Timer.currentInstance.timerDuration = enemyBattleUnit.timeDuration[(int)_difficulty];
+        flatScore = new Vector3(enemyBattleUnit.scorePositive[(int)_difficulty], enemyBattleUnit.scoreNegative[(int)_difficulty], 40);
+        progressRequire = enemyBattleUnit.totalRequire[(int)_difficulty];
+
         StartCoroutine(HUDHandler.currentInstance.SetupHUD(sign, progressRequire));
 
         yield return new WaitForSeconds(3);
@@ -64,6 +73,12 @@ public class BattleHandler : MonoBehaviour
 
     private IEnumerator UpdateProblem()
     {
+        if (debugMode)
+        {
+            ProblemGenerator.debugMode = debugMode;
+            ProblemGenerator.debugTopic = debugTopic;
+        }
+
         state = BattleState.GENERATE;
 
         solveEq = ProblemGenerator.GenerateEquation();
@@ -91,7 +106,6 @@ public class BattleHandler : MonoBehaviour
         {
             return Mathf.Pow(input.x, input.y * -1) == solveEq.answer;
         }
-        //return sign ? Mathf.Pow(input.x, input.y) == solveEq.answer : Mathf.Pow(input.x, input.y * -1) == solveEq.answer;
     }
 
     public void OnSubmitButton()

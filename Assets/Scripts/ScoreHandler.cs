@@ -18,7 +18,7 @@ public class ScoreHandler : MonoBehaviour
 
     [SerializeField] private GameObject floatingTextPrefabs;
 
-    private int _totalScore;
+    protected static int _totalScore;
     private int _progress;
 
     // Start is called before the first frame update

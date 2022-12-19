@@ -11,14 +11,18 @@ public struct Solve
 
 public static class ProblemGenerator
 {
-    private static int m_minPattern = 1, m_maxPattern = 12;
+    public static bool debugMode;
 
-    public static int minPattern { get { return m_minPattern; } set { m_minPattern = value; } }
-    public static int maxPattern { get { return m_maxPattern; } set { m_minPattern = value; } }
+    public static int debugTopic;
+
+    public static List<int> patternPools { get { return _patternPools; } set { _patternPools = value; } }
+
+    private static List<int> _patternPools = new List<int> {1,2,3,4,5,6,7};
 
     public static Solve GenerateEquation()
     {
-        int patternSelected = Random.Range(m_minPattern, m_maxPattern);
+        Debug.Log(_patternPools.Count - 1);
+        int patternSelected = debugMode ? debugTopic : _patternPools[Random.Range(0, _patternPools.Count - 1)];
 
         List<int> baseNumber = new List<int>();
         List<int> powNumber = new List<int>();
@@ -98,7 +102,7 @@ public static class ProblemGenerator
                 }
 
                 m_Solve.problem = patternSelected == 8 ? baseNumber[0] + "^" + powNumber[0] + "/" + baseNumber[0] + "^" + powNumber[1] :
-                          patternSelected == 9 ? "(" + baseNumber[0] + "^" + powNumber[0] + ")" + powNumber[1] :
+                          patternSelected == 9 ? "(" + baseNumber[0] + "^" + powNumber[0] + ")^" + powNumber[1] :
                                                  "1/" + "(" + baseNumber[0] + "^" + powNumber[0] + ")" + powNumber[1];
 
                 m_Solve.answer = patternSelected == 8 ? Mathf.Pow(baseNumber[0], powNumber[0] - powNumber[1]) :

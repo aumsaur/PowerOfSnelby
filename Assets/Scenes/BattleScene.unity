@@ -2869,6 +2869,7 @@ MonoBehaviour:
   MenuSceneID: 0
   RoamingSceneID: 1
   BattleSceneID: 2
+  IntroSceneID: 0
 --- !u!4 &296992248
 Transform:
   m_ObjectHideFlags: 0
@@ -8541,14 +8542,12 @@ MonoBehaviour:
     type: 3}
   enemyPrefab: {fileID: 4913947758072654986, guid: 00c335225d32dd946a686ca94a41b2d9,
     type: 3}
+  enemyBattleUnit: {fileID: 11400000, guid: 6dc78ba389252cd468a450feff9e878a, type: 2}
   playerStation: {fileID: 799126052}
   enemyStation: {fileID: 2057525598}
-  input: {x: 0, y: 0}
-  sign: 0
-  progressRequire: 10
-  flatScore: {x: 50, y: 30, z: 40}
   attempts: 0
-  timerDuration: 180
+  debugMode: 0
+  debugTopic: 0
 --- !u!4 &1121288734
 Transform:
   m_ObjectHideFlags: 0
